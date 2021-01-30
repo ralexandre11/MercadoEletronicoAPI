@@ -1,6 +1,7 @@
 package com.ribeiro.mercadoEletronicoApi.resource;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,16 +23,13 @@ public class OrderResource {
 	
 	@GetMapping
 	public ResponseEntity<List<Order>> findAll() {
-		
-		List<Order> orders = orderService.findAll();
-		
+		List<Order> orders = orderService.all();
 		return ResponseEntity.ok().body(orders);
-		
 	}
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Order> findById(@PathVariable Long id) {
-		Order order = orderService.findById(id);
+	@GetMapping(value = "/{numberOrder}")
+	public ResponseEntity<Optional<Order>> findByNumber(@PathVariable String numberOrder) {
+		Optional<Order> order = orderService.getByNumber(numberOrder);
 		return ResponseEntity.ok().body(order);
 	}
 }
