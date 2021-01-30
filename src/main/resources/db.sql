@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS `order` (
+  `id_order` INTEGER  PRIMARY KEY AUTO_INCREMENT,
+  `number_order` VARCHAR(50) NOT NULL
+);
+
+INSERT INTO `order` VALUES (null, '111111');
+INSERT INTO `order` VALUES (null, '222222'); 
+INSERT INTO `order` VALUES (null, '333333'); 
+
