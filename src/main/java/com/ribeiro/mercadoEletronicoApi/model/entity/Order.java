@@ -4,18 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,30 +25,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 public class Order implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_order")
+	@Column(name = "id_order")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
-	@Column(name="order_number")
+	@Column(name = "order_number")
 	private String orderNumber;
-	
-//	@OneToMany(cascade=CascadeType.ALL, mappedBy="order", fetch=FetchType.EAGER, orphanRemoval=true)
-	@Transient
-	private List<Item> items = new ArrayList<>();
-	
-    public List<Item> getItems() {
-		return new ArrayList<>(items);
-	}
 
-    public void addItem(Item item) {
-        this.items.add(item);
-    }
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_order")
+	private List<Item> items = new ArrayList<>();
 
 }

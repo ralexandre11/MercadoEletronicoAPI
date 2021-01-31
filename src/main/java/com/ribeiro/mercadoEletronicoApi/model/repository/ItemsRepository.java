@@ -9,8 +9,4 @@ import com.ribeiro.mercadoEletronicoApi.model.entity.Item;
 
 public interface ItemsRepository extends JpaRepository<Item, Long>{
 
-	@Override
-    @Query("select item from Item item join fetch item.order")
-    List<Item> findAll();
-	
 }

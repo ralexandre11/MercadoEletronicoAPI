@@ -24,11 +24,13 @@ public class initialOrders implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Order order1 = new Order(null, "111111", new ArrayList<>());
-			order1.getItems().add(new Item(null, "TV", new BigDecimal(2), 2, order1));
+			order1.getItems().add(new Item(null, "TV", new BigDecimal(2), 2, null));
 		
 		Order order2 = new Order(null, "222222", new ArrayList<>());
-			order2.getItems().add(new Item(null, "COMPUTADOR", new BigDecimal(200), 2, order2));
-			order2.getItems().add(new Item(null, "FOGAO", new BigDecimal(150), 1, order2));
+			order2.getItems().add(new Item(null, "COMPUTADOR", new BigDecimal(200), 2, null));
+			order2.getItems().add(new Item(null, "FOGAO", new BigDecimal(150), 1, null));
+			
+		System.out.println(order2);
 
 		Order order3 = new Order(null, "333333", new ArrayList<>());
 
