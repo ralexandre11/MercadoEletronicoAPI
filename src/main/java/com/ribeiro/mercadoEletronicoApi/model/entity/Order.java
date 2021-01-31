@@ -45,11 +45,10 @@ public class Order implements Serializable {
 	
 	public BigDecimal getTotal() {
 		BigDecimal resultado = BigDecimal.ZERO;
-		if(items!=null) {
+		if (items != null) {
 			for (Item item : items) {
-				resultado.add(item.getTotal());
+				resultado = resultado.add(item.getTotal());
 			}
-			return resultado;
 		}
 		return resultado;
 	}
