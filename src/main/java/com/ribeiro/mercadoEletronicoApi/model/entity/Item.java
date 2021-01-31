@@ -47,5 +47,9 @@ public class Item implements Serializable {
 
 	@Column(name = "id_order")
 	private Integer idOrder;
+	
+	public BigDecimal getTotal() {
+		return price.multiply(new BigDecimal(quantity));
+	}
 
 }

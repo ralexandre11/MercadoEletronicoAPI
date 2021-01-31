@@ -1,6 +1,7 @@
 package com.ribeiro.mercadoEletronicoApi.model.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +42,16 @@ public class Order implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_order")
 	private List<Item> items = new ArrayList<>();
+	
+	public BigDecimal getTotal() {
+		BigDecimal resultado = BigDecimal.ZERO;
+		if(items!=null) {
+			for (Item item : items) {
+				resultado.add(item.getTotal());
+			}
+			return resultado;
+		}
+		return resultado;
+	}
 
 }

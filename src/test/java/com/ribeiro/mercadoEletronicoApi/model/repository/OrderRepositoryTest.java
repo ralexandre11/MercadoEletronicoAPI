@@ -36,11 +36,20 @@ public class OrderRepositoryTest {
 		order.getItems().add(new Item(null, "ITEM B", new BigDecimal(150), 1));
 		return order;
 	}
+
+	@Test
+	public void mustSaveOrderDatabase() {
+		Order order = createTestOrder();
+		
+		Order orderSaved = repository.save(order);
+		
+		Assertions.assertThat(orderSaved.getId()).isNotNull();
+	}
 	
 	@Test
-	public void verifyIsReturnNumberOrderSaved() {
+	public void mustFindOrderByNumberOrder() {
 		Order order = createTestOrder();
-		repository.save(order);
+		testEntityManager.persist(order);
 		
 		testEntityManager.clear();
 		Optional<Order> actual = repository.findByOrderNumber("123456");
@@ -48,4 +57,5 @@ public class OrderRepositoryTest {
 		Assertions.assertThat(actual).isPresent();
 		Assertions.assertThat(actual.get()).isNotSameAs(order);
 	}
+	
 }
