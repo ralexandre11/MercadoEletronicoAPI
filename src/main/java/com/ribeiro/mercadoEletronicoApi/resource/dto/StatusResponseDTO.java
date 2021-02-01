@@ -1,7 +1,8 @@
 package com.ribeiro.mercadoEletronicoApi.resource.dto;
 
-import java.math.BigDecimal;
 import java.util.List;
+
+import com.ribeiro.mercadoEletronicoApi.model.enums.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,6 @@ import lombok.Setter;
 public class StatusResponseDTO {
 
 	private String pedido;
-	private List<String> status;
+	private List<Status> status;
 	
 }

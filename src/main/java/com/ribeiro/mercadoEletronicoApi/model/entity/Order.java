@@ -53,4 +53,15 @@ public class Order implements Serializable {
 		return resultado;
 	}
 
+	public Integer getTotalItems() {
+		Integer resultado = 0;
+		if (items != null) {
+			for (Item item : items) {
+				resultado += item.getQuantity();
+			}
+		}
+		return resultado;
+	}
+	
+	
 }
