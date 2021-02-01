@@ -20,7 +20,7 @@ import com.ribeiro.mercadoEletronicoApi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/api/satus")
+@RequestMapping(value = "/api/status")
 @RequiredArgsConstructor
 public class OrderStatusResource {
 
@@ -42,19 +42,24 @@ public class OrderStatusResource {
 			status.add(Status.CODIGO_PEDIDO_INVALIDO);
 		} else {
 			Order order = orderOptional.get();
-			if (statusDTO.getStatus() == "REPROVADO") {
+			System.out.println(statusDTO.getStatus());
+			System.out.println(statusDTO.getValorAprovado());
+			System.out.println(order.getTotal());
+			System.out.println(statusDTO.getItensAprovados());
+			System.out.println(order.getTotalItems());
+			if (statusDTO.getStatus().equals("REPROVADO")) {
 				status.add(Status.REPROVADO);
 			} else if (statusDTO.getValorAprovado().compareTo(order.getTotal()) == 0  && statusDTO.getItensAprovados() == order.getTotalItems()) {
 				status.add(Status.APROVADO);
 			} else {
 				if (statusDTO.getValorAprovado().compareTo(order.getTotal()) > 0) {
 					status.add(Status.APROVADO_VALOR_A_MAIOR);
-				} else {
+				} else if (statusDTO.getValorAprovado().compareTo(order.getTotal()) < 0){
 					status.add(Status.APROVADO_VALOR_A_MENOR);
 				}
 				if (statusDTO.getItensAprovados() > order.getTotalItems()) {
 					status.add(Status.APROVADO_QTD_A_MAIOR);
-				} else {
+				} else if (statusDTO.getItensAprovados() < order.getTotalItems()) {
 					status.add(Status.APROVADO_QTD_A_MENOR);
 				}
 			}

@@ -8,14 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.ribeiro.mercadoEletronicoApi.model.entity.Item;
 import com.ribeiro.mercadoEletronicoApi.model.repository.ItemsRepository;
+import com.ribeiro.mercadoEletronicoApi.service.ItemsService;
+import com.ribeiro.mercadoEletronicoApi.service.OrderService;
 
 @Service
-public class ItemsServiceImpl {
+public class ItemsServiceImpl implements ItemsService {
 
 	@Autowired
 	private ItemsRepository itemsRepository;
 	
-	public List<Item> findAll() {
+	public List<Item> all() {
 		return itemsRepository.findAll();
 	}
 	
