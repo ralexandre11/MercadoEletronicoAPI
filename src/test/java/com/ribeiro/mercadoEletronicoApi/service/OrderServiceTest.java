@@ -42,7 +42,7 @@ public class OrderServiceTest {
 		Mockito.when(repository.save(newOrder)).thenReturn(savedOrder);
 
 		// when
-		Order actual = service.saveOrder(newOrder);
+		Order actual = service.save(newOrder);
 
 		// then
 		Mockito.verify(repository).save(newOrder);
@@ -62,7 +62,7 @@ public class OrderServiceTest {
 		Order newOrder = new Order(null, orderNumber, null);
 
 		// when
-		PersonalException thrown = assertThrows(PersonalException.class, () -> service.saveOrder(newOrder));
+		PersonalException thrown = assertThrows(PersonalException.class, () -> service.save(newOrder));
 
 		// then
 		Assertions.assertThat(thrown).isNotNull();

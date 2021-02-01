@@ -2,14 +2,17 @@ package com.ribeiro.mercadoEletronicoApi.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ribeiro.mercadoEletronicoApi.exception.PersonalException;
+import com.ribeiro.mercadoEletronicoApi.model.entity.Item;
 import com.ribeiro.mercadoEletronicoApi.model.entity.Order;
 import com.ribeiro.mercadoEletronicoApi.model.repository.OrderRepository;
+import com.ribeiro.mercadoEletronicoApi.resource.dto.ItemDTO;
 import com.ribeiro.mercadoEletronicoApi.resource.dto.OrderDTO;
 import com.ribeiro.mercadoEletronicoApi.service.OrderService;
 
@@ -24,20 +27,21 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional
-	public Order saveOrder(Order order) {
+	public Order save(Order order) {
 		checkOrderNumber(order.getOrderNumber());
 		return orderRepository.save(order);
 	}
 
 	@Override
-	public Order updateOrder(Order order) {
-		// Objects.requireNonNull(order)
+	public Order update(Order order) {
+		Objects.requireNonNull(order.getId());
 		return orderRepository.save(order);
 	}
 
 	@Override
-	public void deleteOrder(Order order) {
-		// TODO Auto-generated method stub
+	public void delete(Order order) {
+		Objects.requireNonNull(order.getId());
+		orderRepository.delete(order);
 	}
 
 	@Override
@@ -48,6 +52,12 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Optional<Order> getByNumber(String orderNumber) {
 		return orderRepository.findByOrderNumber(orderNumber);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Order> getOrderByID(Long id) {
+		return orderRepository.findById(id);
 	}
 
 	private void checkOrderNumber(String orderNumber) {
@@ -63,12 +73,42 @@ public class OrderServiceImpl implements OrderService {
 		order.get().getTotal();
 	}
 	
-//	private Order convertDTO(final OrderDTO dto) {
-//		Order order = new Order(null, dto.getPedido(), new ArrayList<>());
-//		return order;
-//		
-//	}
+	public List<OrderDTO> ConvertListEntityDTO(List<Order> orders) {
+		List<OrderDTO> ordersDTO = new ArrayList<>();
+		for (Order order : orders) {
+			ordersDTO.add(ConvertEntityDTO(order));
+		}
+		return ordersDTO;
+	}
 
+	public OrderDTO ConvertEntityDTO(Order order) {
+		OrderDTO orderDTO = new OrderDTO();
+		List<ItemDTO> itemsDTO = new ArrayList<>();
+		for (Item item : order.getItems()) {
+			ItemDTO itemDTO = new ItemDTO();
+			itemDTO.setDescricao(item.getDescription());
+			itemDTO.setPrecoUnitario(item.getPrice());
+			itemDTO.setQtd(item.getQuantity());
+			itemsDTO.add(itemDTO);
+		}
+		orderDTO.setPedido(order.getOrderNumber());
+		orderDTO.setItens(itemsDTO);
+		return orderDTO;
+	}
+
+	public Order ConvertDTOEntity(OrderDTO orderDTO) {
+		Order order = new Order();
+		List<Item> items = new ArrayList<>();
+		for (ItemDTO itemDTO : orderDTO.getItens()) {
+			Item item = new Item();
+			item.setDescription(itemDTO.getDescricao());
+			item.setPrice(itemDTO.getPrecoUnitario());
+			item.setQuantity(itemDTO.getQtd());
+			items.add(item);
+		}
+		order.setOrderNumber(orderDTO.getPedido());
+		order.setItems(items);
+		return order;
+	}
 	
-
 }
