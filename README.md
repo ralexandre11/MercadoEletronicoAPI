@@ -36,35 +36,104 @@ The purpose of the application is:
 
 ## Database
 
-The H2 database was used, which is a memory instance generated when the application is started.
-
-Some data is generated for testing when the application is started.
+* The H2 database was used, which is a memory instance generated when the application is started.
+* Some data is generated for testing when the application is started.
 
 ## How to run application using Docker
-* If you don't have Docker, please install Docker:
-[Docker Desktop](https://docs.docker.com/get-docker/) or [Docker basics for Amazon ECS](https://docs.aws.amazon.com/AmazonECS/latest/userguide/docker-basics.html).
+* If you don't have Docker, please install Docker: [Docker Desktop](https://docs.docker.com/get-docker/).
 * Run on the terminal:
 
-		`sudo docker pull projetquebec/rest-api:0.0.1-SNAPSHOT`
+		`sudo docker pull ricardoribeirodev/ricardorepository:0.0.1-SNAPSHOT`
 
-		`docker run --network="host" projetquebec/rest-api:0.0.1-SNAPSHOT`
+		`docker run -p 8080:8080 ricardoribeirodev/ricardorepository:0.0.1-SNAPSHOT`
+
+## How to test the endpoint "/api/pedido/"
+
+* GET (List all orders)
+		
+		`http://localhost:8080/api/pedido`
+
+* GET (List a specific order)
+		
+		`http://localhost:8080/api/pedido/222222`
+
+* POST (Insert a new order)
+		
+		`http://localhost:8080/api/pedido`
+		
+		(Body)
+		{
+		  "pedido": "444444",
+		  "itens": [
+		    {
+		      "descricao": "ITEM A",
+		      "precoUnitario": 300.00,
+		      "qtd": 3
+		    },
+		    {
+		      "descricao": "ITEM B",
+		      "precoUnitario": 450.00,
+		      "qtd": 2
+		    }
+		  ]
+		}`
+		
+* PUT (Update an existing order)
+		
+		`http://localhost:8080/api/pedido/444444`
+		
+		(Body)
+		{
+		  "pedido": "444444",
+		  "itens": [
+		    {
+		      "descricao": "ITEM A",
+		      "precoUnitario": 500.00,
+		      "qtd": 3
+		    },
+		    {
+		      "descricao": "ITEM B",
+		      "precoUnitario": 700.00,
+		      "qtd": 2
+		    }
+		  ]
+		}`
+
+* DELETE (Delete an existing order)
+		
+		`http://localhost:8080/api/pedido/333333`
+		
+## How to test the endpoint "/api/status/"
+
+
+* POST (Check status Order)
+		
+		`http://localhost:8080/api/status`
+		
+		(Body)
+		{
+			"status":"APROVADO",
+			"itensAprovados": 5,
+			"valorAprovado": 540,
+			"pedido":"222222"
+		}`
+
+	
+		
+		
 
 ## How to develop
 * You will need a Windows or Linux with Java/OpenJDK.
 * Application is using Maven, so all required libraries should be downloaded automatically.
 * Clone the git repository using the URL on the Github home page:
 
-		`$ git clone git@github.com:ralexandre11/restApiCpf.git`
+		`$ https://github.com/ralexandre11/MercadoEletronicoAPI`
 
-		`$ cd restApiCpf`
+		`$ cd MercadoEletronicoAPI`
 
 * To buid the image Docker, use the command:
 
 		`$ mvn package`
 
 * use the docker command to run in the topic above.
-
-## dockerhub
-
-You can access the respository [here](https://hub.docker.com/repository/docker/rest-api).
 
