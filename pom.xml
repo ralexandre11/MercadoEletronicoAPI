@@ -60,9 +60,9 @@
 				<artifactId>dockerfile-maven-plugin</artifactId>
 				<version>1.4.13</version>
 				<configuration>
-					<username>projetquebec</username>
-					<password>projetquebec</password>
-					<repository>projetquebec/rest-api</repository>
+					<username>ricardoribeirodev</username>
+					<password>Sucesso@01</password>
+					<repository>ricardoribeirodev/ricardorepository</repository>
 					<tag>${project.version}</tag>
 					<buildArgs>
 						<JAR_FILE>./target/${project.build.finalName}.jar</JAR_FILE>
