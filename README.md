@@ -1,6 +1,6 @@
-<p align="center">
-  <a href="https://docs.spring.io/spring-batch/docs/current/reference/html/index.html">
-    <img src="src/main/resources/m2.svg" alt="Logo" width="350">
+<p align="left">
+  <a href="https://www.me.com.br/">
+    <img src="src/main/resources/me.svg" alt="Mercado Eletrônico" width="300">
   </a>
 </p>
 
@@ -31,15 +31,14 @@ The purpose of the application is:
 * The following illustration shows the application architecture.
 
 <p>
-  <img src="src/main/resources/architecture.png" alt="Architecture">
+  <img src="src/main/resources/architecture.jpg" alt="Architecture">
 </p>
 
-## Database table
+## Database
 
-The table contains three fields as follow:
-  * ID: sequential number that will be the primary key in the database.
-  * NAME: 50 characters.
-  * CPF: 11 characters.
+The H2 database was used, which is a memory instance generated when the application is started.
+
+Some data is generated for testing when the application is started.
 
 ## How to run application using Docker
 * If you don't have Docker, please install Docker:
@@ -69,6 +68,3 @@ The table contains three fields as follow:
 
 You can access the respository [here](https://hub.docker.com/repository/docker/rest-api).
 
-## Front-end Project
-
-You can access the respository [here](https://github.com/ralexandre11/app-react-cpf).

@@ -34,7 +34,8 @@ public class initialOrders implements CommandLineRunner {
 			order3.getItems().add(new Item(null, "ITEM A", new BigDecimal(300), 2, null));
 
 		orderRepository.saveAll(Arrays.asList(order1, order2, order3));
-		
+		System.out.println("Insert Data:");
+		System.out.println("Orders: 111111, 222222, 333333");
 	}
 	
 }

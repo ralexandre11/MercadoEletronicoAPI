@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ribeiro.mercadoEletronicoApi.model.entity.Order;
+import com.ribeiro.mercadoEletronicoApi.model.enums.Status;
 import com.ribeiro.mercadoEletronicoApi.resource.dto.OrderDTO;
+import com.ribeiro.mercadoEletronicoApi.resource.dto.OrderStatusDTO;
 
 public interface OrderService {
 	
@@ -27,5 +29,7 @@ public interface OrderService {
 	OrderDTO ConvertEntityDTO(Order order);
 
 	Order ConvertDTOEntity(OrderDTO orderDTO);
+	
+	List<Status> checkStatus(OrderStatusDTO statusDTO);
 	
 }

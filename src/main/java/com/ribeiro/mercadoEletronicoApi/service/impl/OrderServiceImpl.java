@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ribeiro.mercadoEletronicoApi.exception.PersonalException;
 import com.ribeiro.mercadoEletronicoApi.model.entity.Item;
 import com.ribeiro.mercadoEletronicoApi.model.entity.Order;
+import com.ribeiro.mercadoEletronicoApi.model.enums.Status;
 import com.ribeiro.mercadoEletronicoApi.model.repository.OrderRepository;
 import com.ribeiro.mercadoEletronicoApi.resource.dto.ItemDTO;
 import com.ribeiro.mercadoEletronicoApi.resource.dto.OrderDTO;
+import com.ribeiro.mercadoEletronicoApi.resource.dto.OrderStatusDTO;
 import com.ribeiro.mercadoEletronicoApi.service.OrderService;
 
 @Service
@@ -110,5 +112,33 @@ public class OrderServiceImpl implements OrderService {
 		order.setItems(items);
 		return order;
 	}
+	
+	public List<Status> checkStatus(OrderStatusDTO statusDTO) {
+		List<Status> status = new ArrayList<>();
+		Optional<Order> orderOptional = getByNumber(statusDTO.getPedido());
+		if (!orderOptional.isPresent()) {
+			status.add(Status.CODIGO_PEDIDO_INVALIDO);
+		} else {
+			Order order = orderOptional.get();
+			if (statusDTO.getStatus().equals("REPROVADO")) {
+				status.add(Status.REPROVADO);
+			} else if (statusDTO.getValorAprovado().compareTo(order.getTotal()) == 0  && statusDTO.getItensAprovados() == order.getTotalItems()) {
+				status.add(Status.APROVADO);
+			} else {
+				if (statusDTO.getValorAprovado().compareTo(order.getTotal()) > 0) {
+					status.add(Status.APROVADO_VALOR_A_MAIOR);
+				} else if (statusDTO.getValorAprovado().compareTo(order.getTotal()) < 0){
+					status.add(Status.APROVADO_VALOR_A_MENOR);
+				}
+				if (statusDTO.getItensAprovados() > order.getTotalItems()) {
+					status.add(Status.APROVADO_QTD_A_MAIOR);
+				} else if (statusDTO.getItensAprovados() < order.getTotalItems()) {
+					status.add(Status.APROVADO_QTD_A_MENOR);
+				}
+			}
+		}
+		return status;
+	}
+
 	
 }
